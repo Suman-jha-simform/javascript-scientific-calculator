@@ -62,28 +62,35 @@ class Calculator {
             this.currentInput.innerText = Math.log(num2) / Math.log(num1);
             this.previousInput.innerText = '';
 
-        }  else {
-           
+        }   else if(this.currentInput.innerText.includes('Cannot divide by zero')) return;
             
-            if(this.currentInput.innerText != '' ) {
+            else {  
+                if(this.currentInput.innerText != '' ) {
 
-                if(operators.test(this.currentInput.innerText)) {
+                    if(operators.test(this.currentInput.innerText)) {
 
-                } else {
-                    this.currentInput.innerText = Number.parseFloat(this.currentInput.innerText);
-                }
+                    } else {
+                        this.currentInput.innerText = Number.parseFloat(this.currentInput.innerText);
+                    }
+
+                    let output = eval(this.previousInput.innerText.toString() + this.currentInput.innerText.toString());
+                    if(output == 'Infinity' || this.previousInput.innerText =='0/' && this.currentInput.innerText=='0') {
+                        this.currentInput.innerText = "Cannot divide by zero";
+                        this.previousInput.innerText ='';
+                        return;
+                    }
+                    else {
+                        this.currentInput.innerText = output;
+                        this.previousInput.innerText ='';
+                    }
                 
-                this.expression = this.previousInput.innerText.toString() + this.currentInput.innerText.toString();
-                this.output = eval(this.expression);
-                this.currentInput.innerText = this.output;
-                this.previousInput.innerText ='';
-            } else if(this.currentInput.innerText == '' && this.previousInput.innerText != '') {
-                this.expression = this.previousInput.innerText.toString() + this.currentInput.innerText.toString();
-                this.output = eval(this.expression);
-                this.currentInput.innerText = this.output;
-                this.previousInput.innerText ='';
+                } else if(this.currentInput.innerText == '' && this.previousInput.innerText != '') {
+                    this.expression = this.previousInput.innerText.toString() + this.currentInput.innerText.toString();
+                    this.output = eval(this.expression);
+                    this.currentInput.innerText = this.output;
+                    this.previousInput.innerText ='';
+                }
             }
-        }
     }
 
     // function to add value of constant
