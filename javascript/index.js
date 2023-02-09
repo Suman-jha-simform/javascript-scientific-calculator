@@ -43,7 +43,7 @@ class Calculator {
 
     // function to calculate the value
     equalsto() {
-        let operators = /[+\-*/]/;
+        let operators = /[+\-*/())]/;
         if(this.previousInput.innerText.includes('^') && this.currentInput.innerText != '') {
             let num1 = this.previousInput.innerText.toString().slice(0, -1);
             let num2 = this.currentInput.innerText;
@@ -73,6 +73,11 @@ class Calculator {
                     this.currentInput.innerText = Number.parseFloat(this.currentInput.innerText);
                 }
                 
+                this.expression = this.previousInput.innerText.toString() + this.currentInput.innerText.toString();
+                this.output = eval(this.expression);
+                this.currentInput.innerText = this.output;
+                this.previousInput.innerText ='';
+            } else if(this.currentInput.innerText == '' && this.previousInput.innerText != '') {
                 this.expression = this.previousInput.innerText.toString() + this.currentInput.innerText.toString();
                 this.output = eval(this.expression);
                 this.currentInput.innerText = this.output;
